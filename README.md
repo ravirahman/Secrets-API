@@ -2,7 +2,7 @@
 Secrets-API provides a REST backend to store secret information in an encrypted form.
 
 ## Demo and API Documentation:
-Documented endpoints (and an interactive demo) are available in the [Swagger UI](https://secrets-api-demo.herokuapp.com)
+Documented endpoints (and an interactive demo) are available in the [Swagger UI](https://secrets-api.herokuapp.com)
 
 _Note: After receiving a json web token (`jwt`) from login or signup, click the Authorize button (upper right corner) and enter `Bearer [jwt]` into the box (replace `[jwt]` with the actual json web token)_
 
