@@ -35,6 +35,7 @@ _Note that testing will use the database specified above in `setup`_
 - Used envelope encryption to allow for password changes without having re-encrypting all secrets
 - Decided against client-side encryption (and SRP authentication) to allow for client-agnostic use via REST.
 - Only encrypts content of secret so the title is searchable
+- Used Test Driven Development to ensure that it works. 45 Test cases are spread out across the [test](/test) directory to simulate the authentication flow and secret operations. It includes tests for scenarios that should result in both successful and erroneous responses.
 
 ## Future Improvements
 - Implement secret-specific encryption key and permission structure for secrets to allow for sharing between accounts

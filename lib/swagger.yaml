@@ -227,7 +227,7 @@ paths:
             description: JSON of all API endpoints
   /accounts/signup:
     post:
-      tags: ["Account"]
+      tags: ["Accounts"]
       operationId: postAccountSignup
       description: Signup for a new account.
       parameters:
@@ -244,7 +244,7 @@ paths:
 
   /accounts/login:
     post:
-      tags: ["Account"]
+      tags: ["Accounts"]
       operationId: postAccountLogin
       description: Login to account.
       parameters:
@@ -265,7 +265,7 @@ paths:
     get:
       security:
         - Bearer: []
-      tags: ["Account"]
+      tags: ["Accounts"]
       description: Get account information
       operationId: getAccountByAccountId
       responses:
@@ -280,7 +280,7 @@ paths:
     #patch:
     #  security:
     #    - Bearer: []
-    #  tags: ["Account"]
+    #  tags: ["Accounts"]
     #  description: Update account information
     #  operationId: patchAccountByAccountId
     #  parameters:
@@ -299,7 +299,7 @@ paths:
     post:
       security:
         - Bearer: []
-      tags: ["Account"]
+      tags: ["Accounts"]
       description: Logout
       operationId: Log out by revoking one or all JWTs
       parameters:
@@ -319,7 +319,7 @@ paths:
     get:
       security:
         - Bearer: []
-      tags: ["Secret"]
+      tags: ["Secrets"]
       description: Get all secrets
       operationId: getSecrets
       parameters:
@@ -346,7 +346,7 @@ paths:
     post:
       security:
         - Bearer: []
-      tags: ["Secret"]
+      tags: ["Secrets"]
       description: Create a new secret
       operationId: postSecrets
       parameters:
@@ -371,7 +371,7 @@ paths:
     get:
       security:
         - Bearer: []
-      tags: ["Secret"]
+      tags: ["Secrets"]
       description: Get secret
       operationId: getSecretById
       responses:
@@ -389,7 +389,7 @@ paths:
     patch:
       security:
         - Bearer: []
-      tags: ["Secret"]
+      tags: ["Secrets"]
       description: Update a secret
       operationId: patchSecretById
       parameters:
@@ -410,7 +410,7 @@ paths:
     delete:
       security:
         - Bearer: []
-      tags: ["Secret"]
+      tags: ["Secrets"]
       description: Delete a secret
       operationId: deleteSecretById
       responses:
