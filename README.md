@@ -9,10 +9,15 @@ _Note: After receiving a json web token (`jwt`) from login or signup, click the 
 ### Brief Overview:
 - Upon account creation, the server generates a random encryption key and envelope-encrypts the key with the user's password.
 - Upon login, the server decrypts the envelope-encrypted encryption key with the user's password. It is then re-encrypted with a random password (stored in the database) and the server's secret. This server-decryptable form of the key is then  passed in the JSON Web Token so it can be used for subsequent operations during the same session.
-- Secrets can be created/updated/read/deleted using standard CURD operations.
+- Secrets can be created/updated/read/deleted using standard CURD operations
 - Upon logout, the random password is destroyed, so it is decrypt the encryption key and read user's data.
 
-## Building and Testing
+## Testing Considerations
+- Used Test Driven Development (TDD) to evaluate functionality
+- 45 Test cases are spread out across the [test](/test) directory to simulate the authentication flow and secret operations.
+- It includes tests for scenarios that should result in both successful and erroneous responses.
+
+## Getting Started
 ####Setup
 - `git checkout https://github.com/ravirahman/Secrets-API.git`
 - `cd Secrets-API`
@@ -27,22 +32,21 @@ _Note that Secrets-API listens on the specified `PORT` below (using `http.create
     - `export PROTOCOL=http://`
     - `export HOSTNAME=localhost`
     - `export PORT=3000`
-    - `export LIVE_PORT=PORT` (Defaults to `PORT`.)
+    - `export LIVE_PORT=PORT` (Defaults to `PORT`)
 - `npm start`
 - Visit [http://localhost:3000](http://localhost:3000) for the Swagger-UI (or the protocol/hostname/port combination specified via environmental variables)
 
 ####Test
-_Note that testing will use the database specified above in `setup`_
+_Note that testing will use the database specified above in `setup` and will run all the test cases in the [test](/test) directory
 - `npm test`
 
 ## Design Considerations
 - Used envelope encryption to allow for password changes without having re-encrypting all secrets
-- Decided against client-side encryption (and SRP authentication) to allow for client-agnostic use via REST.
+- Decided against client-side encryption (and SRP authentication) to allow for client-agnostic use via REST
 - Only encrypts content of secret so the title is searchable
-- Used Test Driven Development to ensure that it works. 45 Test cases are spread out across the [test](/test) directory to simulate the authentication flow and secret operations. It includes tests for scenarios that should result in both successful and erroneous responses.
-
+- 
 ## Future Improvements
-- Implement secret-specific encryption key and permission structure for secrets to allow for sharing between accounts
+- Implement secret-specific encryption key and permission structure to allow for sharing of secrets between accounts
 - Search in encrypted fields (so both title and content can be encrypted)
 
 ## Core dependencies
@@ -52,7 +56,7 @@ _Note that testing will use the database specified above in `setup`_
 - JSON web tokens for authentication, via [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) and [express-jwt](https://www.npmjs.com/package/express-jwt)
 - Data validated by [swagger-express-middleware](https://www.npmjs.com/package/swagger-express-middleware) via the Swagger specification
 - Demo is powered by [swagger-ui](https://www.npmjs.com/package/swagger-ui) 
-
+- Test cases are executed by [mocha](https://www.npmjs.com/package/mocha) and [chai](https://www.npmjs.com/package/chai)
 A full list is available in [package.json](./package.json)
 
 ## License
