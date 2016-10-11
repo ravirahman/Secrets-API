@@ -21,10 +21,13 @@ _Note: After receiving a json web token (`jwt`) from login or signup, click the 
 - `export MONGO_DB_URI=mongodb://username:password@hostname:port/db`
 
 ####Build and Run
+_Note that Secrets-API listens on the specified `PORT` below (using `http.createServer(app).listen(PORT)`).
+`PROTOCOL`, `HOSTNAME`, and `LIVE_PORT` are used for `CORS` and `JWT` Audience / Issuer, not for running the actual server._
 - (Optionally EXPORT the following environmental variables -- default values provided below)
     - `export PROTOCOL=http://`
     - `export HOSTNAME=localhost`
     - `export PORT=3000`
+    - `export LIVE_PORT=PORT` (Defaults to `PORT`.)
 - `npm start`
 - Visit [http://localhost:3000](http://localhost:3000) for the Swagger-UI (or the protocol/hostname/port combination specified via environmental variables)
 
