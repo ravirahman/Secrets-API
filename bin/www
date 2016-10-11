@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+"use strict";
+
+let path = require('path');
+process.env.PROJECT_ROOT = path.dirname(__dirname);
+let server = require('../index').server;
+
+server.listen(process.env.PORT || 3000, null, null, (err) => {
+    if (err) {
+        return console.error("error", err);
+    }
+    return console.log("server started");
+});

@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+"use strict";
+
+let path = require('path');
+process.env.PROJECT_ROOT = path.dirname(__dirname);
+let recursive = require('recursive-readdir');
+
+describe('Testing All Endpoints', () => {
+    it('Loaded All Tests', (cb) => {
+        recursive(path.join(__dirname, "..", "test"), [".js"], (err,files) => {
+            if (err) {
+                return cb(err);
+            }
+            for (var filename of files) {
+                require(filename); //require each file in the test folder
+            }
+            cb();
+        });
+    });
+});

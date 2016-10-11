@@ -1,0 +1,236 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: Illumio Secrets
+  description: REST Backend to store secrets. It features JWT sessions and Server-Side Encryption
+
+consumes:
+  - application/json
+produces:
+  - application/json
+
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: Format is "Bearer [JWT FROM LOGIN/SIGNUP ENDPOINT]"
+
+definitions:
+  secret:
+    type: object
+    required:
+      - title
+      - content
+      - id
+    properties:
+      title:
+        type: string
+      content:
+        type: string
+      id:
+        type: string
+  accountResponse:
+    type: object
+    properties:
+      accountId:
+        type: string
+      username:
+        type: string
+    required:
+      - accountId
+      - username
+
+  jwtResponse:
+    type: object
+    properties:
+      jwt:
+        type: string
+    required:
+      - jwt
+
+  errorResponse:
+    type: object
+    properties:
+      status:
+        type: number
+      message:
+        type: string
+      code:
+        type: string
+      name:
+        type: string
+      details:
+        type: string
+      type:
+        type: string
+
+
+parameters:
+  secretId:
+    name: secretId
+    in: path
+    description: ID of the secret
+    type: string
+    required: true
+    maxLength: 24
+    minLength: 24
+
+  accountId:
+    name: accountId
+    in: path
+    description: ID of the account. Can use 'me' for logged-in user.
+    type: string
+    required: true
+    pattern: /(^[a-zA-Z0-9]{24}|me)$/i
+
+  accountCredentials:
+    name: accountCredentials
+    in: body
+    description: Account object containing the username and password.
+    required: true
+    schema:
+      title: Account
+      description: Account object containing the username and password.
+      type: object
+      properties:
+        username:
+          type: string
+          description: Unique across entire system
+        password:
+          type: string
+          description: Used to envelope-encrypt encryption key. Never stored directly in database
+      required:
+        - username
+        - password
+
+  accountOptional:
+    name: accountOptional
+    in: body
+    description: Account object containing the parameters to update
+    required: true
+    schema:
+      title: Account
+      description: Account object containing the parameters to update
+      type: object
+      properties:
+        username:
+          type: string
+          description: Unique across entire system
+        password:
+          type: string
+          description: Used to envelope-encrypt encryption key. Never stored directly in database
+
+  jwtIds:
+    name: jwtIds
+    description: Object containing list JWTs to revoke. "*" can be used to revoke all. Currently supports for for only one JWT ID (array length of 1).
+    in: body
+    required: false
+    schema:
+      type: object
+      title: JWT IDS
+      description: Object containing list JWTs to revoke. "*" can be used to revoke all. Currently supports for for only one JWT ID (array length of 1).
+      properties:
+        jwtIds:
+          type: array
+          description: "Array of JWT IDs"
+          items:
+            type: "string"
+            pattern: /(^[a-zA-Z0-9]{24}|\*)$/i
+
+paths:
+  /api-docs:
+    get:
+      operationId: getApiDocs
+      description: get the API docs, used by swagger
+      hidden: true
+      tags: ["Schema"]
+  /accounts/signup:
+    post:
+      tags: ["Account"]
+      operationId: postAccountSignup
+      description: Signup for a new account.
+      parameters:
+        - $ref: "#/parameters/accountCredentials"
+      responses:
+        201:
+          description: JWT
+          schema:
+            $ref: "#/definitions/jwtResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/errorResponse"
+
+  /accounts/login:
+    post:
+      tags: ["Account"]
+      operationId: postAccountLogin
+      description: Login to account.
+      parameters:
+        - $ref: "#/parameters/accountCredentials"
+      responses:
+        200:
+          description: JWT
+          schema:
+            $ref: "#/definitions/jwtResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/errorResponse"
+
+  /accounts/{accountId}:
+    parameters:
+      - $ref: "#/parameters/accountId"
+    get:
+      security:
+        - Bearer: []
+      tags: ["Account"]
+      description: Get account information
+      operationId: getAccountByAccountId
+      responses:
+        200:
+          description: Account object containing the accountId and username
+          schema:
+            $ref: "#/definitions/accountResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/errorResponse"
+    #patch:
+    #  security:
+    #    - Bearer: []
+    #  tags: ["Account"]
+    #  description: Update account information
+    #  operationId: patchAccountByAccountId
+    #  parameters:
+    #    - $ref: "#/parameters/accountOptional"
+    #  responses:
+    #    200:
+    #      description: Account object containing the accountId and username
+    #      schema:
+    #        $ref: "#/definitions/accountResponse"
+    #    default:
+    #      description: Error
+    #      schema:
+    #        $ref: "#/definitions/errorResponse
+
+  /accounts/{accountId}/logout:
+    post:
+      security:
+        - Bearer: []
+      tags: ["Account"]
+      description: Logout
+      operationId: Log out by revoking one or all JWTs
+      parameters:
+        - $ref: "#/parameters/accountId"
+        - $ref: "#/parameters/jwtIds"
+      responses:
+        200:
+          description: Response contains object with jwtIds as keys and values as their revocation status
+          schema:
+            type: object
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/errorResponse"
