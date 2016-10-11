@@ -19,7 +19,7 @@ _Note: After receiving a json web token (`jwt`) from login or signup, click the 
 
 ## Getting Started
 ####Setup
-- `git checkout https://github.com/ravirahman/Secrets-API.git`
+- `git clone https://github.com/ravirahman/Secrets-API.git`
 - `cd Secrets-API`
 - `npm install`
 - `export SERVER_SECRET=********`
