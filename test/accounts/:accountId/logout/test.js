@@ -161,17 +161,17 @@ describe('POST /accounts/{accountId}/logout', () => {
                         expect(err).to.have.status(401);
                         expect(res.body.message).to.be.equal('invalid signature'); //invalid signature because we delete the password when the token expires (so we cannot later recover the user's encryption key)
                         //not a revoked token error, because that check is performed 2nd.
-                        cb();
+                        chai.request(app)
+                            .get(`/accounts/${accountId1}`)
+                            .set('Authorization', `Bearer ${jwt1b}`)
+                            .end((err, res) => {
+                                expect(err).to.be.null;
+                                expect(res.body.username).to.be.equal('username_1');
+                                expect(res.body.accountId).to.be.equal(accountId1);
+                                cb();
+                            });
                     });
-                chai.request(app)
-                    .get(`/accounts/${accountId1}`)
-                    .set('Authorization', `Bearer ${jwt1b}`)
-                    .end((err, res) => {
-                        expect(err).to.be.null;
-                        expect(res.body.username).to.be.equal('username_1');
-                        expect(res.body.accountId).to.be.equal(accountId1);
-                        cb();
-                    });
+
             });
     });
 
@@ -205,19 +205,16 @@ describe('POST /accounts/{accountId}/logout', () => {
                         expect(err).to.have.status(401);
                         expect(res.body.code).to.be.equal('invalid_token'); //invalid signature because we delete the password when the token expires (so we cannot later recover the user's encryption key)
                         //not a revoked token error, because that check is performed 2nd.
-                        cb();
+                        chai.request(app)
+                            .get(`/accounts/${accountId1}`)
+                            .set('Authorization', `Bearer ${jwt1c}`)
+                            .end((err, res) => {
+                                expect(err).to.be.null;
+                                expect(res.body.username).to.be.equal('username_1');
+                                expect(res.body.accountId).to.be.equal(accountId1);
+                                cb();
+                            });
                     });
-                chai.request(app)
-                    .get(`/accounts/${accountId1}`)
-                    .set('Authorization', `Bearer ${jwt1c}`)
-                    .end((err, res) => {
-                        expect(err).to.be.null;
-                        expect(res.body.username).to.be.equal('username_1');
-                        expect(res.body.accountId).to.be.equal(accountId1);
-                        cb();
-                    });
-
-                cb();
             });
     });
 

@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "node ./bin/test"
+    "test": "node ./node_modules/mocha/bin/_mocha --ui tdd ./bin/test"
   },
   "dependencies": {
     "async": "^2.0.1",

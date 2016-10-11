@@ -15,15 +15,16 @@ _Note: After receiving a json web token (`jwt`) from login or signup, click the 
 ## Building and Testing
 ####Setup
 - `git checkout https://github.com/ravirahman/Secrets-API.git`
+- `cd Secrets-API`
 - `npm install`
 - `export SERVER_SECRET=********`
 - `export MONGO_DB_URI=mongodb://username:password@hostname:port/db`
 
 ####Build and Run
-- (Optionally EXPORT the following environmental variables (default values provided below)
+- (Optionally EXPORT the following environmental variables -- default values provided below)
     - `export PROTOCOL=http://`
     - `export HOSTNAME=localhost`
-    - `export PORT=3000`)
+    - `export PORT=3000`
 - `npm start`
 - Visit [http://localhost:3000](http://localhost:3000) for the Swagger-UI (or the protocol/hostname/port combination specified via environmental variables)
 
