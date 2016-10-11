@@ -1,8 +1,8 @@
 swagger: "2.0"
 info:
   version: 1.0.0
-  title: Illumio Secrets
-  description: REST Backend to store secrets. It features JWT sessions and Server-Side Encryption
+  title: Secrets-API
+  description: Secrets-API provides a REST backend to store secret information in an encrypted form.
 
 consumes:
   - application/json
@@ -17,19 +17,35 @@ securityDefinitions:
     description: Format is "Bearer [JWT FROM LOGIN/SIGNUP ENDPOINT]"
 
 definitions:
-  secret:
+  secretResponse:
     type: object
     required:
       - title
       - content
-      - id
+      - secretId
+      - owner
+      - createdAt
+      - updatedAt
     properties:
       title:
         type: string
+        description: Not encrypted, but searchable.
       content:
         type: string
-      id:
+        description: Encrypted, but not searchable.
+      owner:
         type: string
+        minLength: 24
+        maxLength: 24
+      secretId:
+        type: string
+        minLength: 24
+        maxLength: 24
+      createdAt:
+        type: string
+      updatedAt:
+        type: string
+
   accountResponse:
     type: object
     properties:
@@ -65,7 +81,6 @@ definitions:
       type:
         type: string
 
-
 parameters:
   secretId:
     name: secretId
@@ -76,6 +91,66 @@ parameters:
     maxLength: 24
     minLength: 24
 
+  search:
+    name: search
+    in: query
+    description: Text to search for
+    type: string
+    required: false
+
+  sortField:
+    name: sortField
+    in: query
+    description: Field to sort by
+    type: string
+    required: false
+
+  sortOrder:
+    name: sortOrder
+    in: query
+    description: Either 1 (ascending) or -1 (descending). Defaults to 1.
+    type: integer
+    required: false
+    enum: [-1, 1]
+    default: 1
+
+  secretRequired:
+    name: Secret
+    in: body
+    description: Requires all writeable fields of a Secret object to be specified. Note that only `content` is encrypted.
+    required: true
+    schema:
+      title: Secret
+      description: Requires all writeable fields of a Secret object to be specified. Note that only `content` is encrypted.
+      type: object
+      properties:
+        title:
+          type: string
+          description: Not encrypted, but searchable.
+        content:
+          type: string
+          description: Encrypted, but not searchable.
+      required:
+        - title
+        - content
+
+  secretOptional:
+    name: Secret
+    in: body
+    description: Object must be passed, but does not require any writeable fields of a Secret object to be specified. Note that only `content` is encrypted.
+    required: true
+    schema:
+      title: Secret
+      description: Object must be passed, but does not require any writeable fields of a Secret object to be specified. Note that only `content` is encrypted.
+      type: object
+      properties:
+        title:
+          type: string
+          description: Not encrypted, but searchable.
+        content:
+          type: string
+          description: Encrypted, but not searchable.
+
   accountId:
     name: accountId
     in: path
@@ -85,7 +160,7 @@ parameters:
     pattern: /(^[a-zA-Z0-9]{24}|me)$/i
 
   accountCredentials:
-    name: accountCredentials
+    name: Account
     in: body
     description: Account object containing the username and password.
     required: true
@@ -105,7 +180,7 @@ parameters:
         - password
 
   accountOptional:
-    name: accountOptional
+    name: Account
     in: body
     description: Account object containing the parameters to update
     required: true
@@ -143,8 +218,13 @@ paths:
     get:
       operationId: getApiDocs
       description: get the API docs, used by swagger
-      hidden: true
       tags: ["Schema"]
+      responses:
+        200:
+          description: JSON of all API endpoints
+          schema:
+            type: object
+            description: JSON of all API endpoints
   /accounts/signup:
     post:
       tags: ["Account"]
@@ -226,8 +306,116 @@ paths:
         - $ref: "#/parameters/accountId"
         - $ref: "#/parameters/jwtIds"
       responses:
+        204:
+          description: Response is empty
+          schema:
+            type: object
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/errorResponse"
+
+  /secrets:
+    get:
+      security:
+        - Bearer: []
+      tags: ["Secret"]
+      description: Get all secrets
+      operationId: getSecrets
+      parameters:
+        - $ref: "#/parameters/search"
+        - $ref: "#/parameters/sortField"
+        - $ref: "#/parameters/sortOrder"
+      responses:
         200:
-          description: Response contains object with jwtIds as keys and values as their revocation status
+          description: Response contains object with key `secrets` and value of array of secret ids
+          schema:
+            type: object
+            properties:
+              secrets:
+                type: array
+                items:
+                  $ref: "#/definitions/secretResponse"
+            required:
+              - secrets
+
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/errorResponse"
+    post:
+      security:
+        - Bearer: []
+      tags: ["Secret"]
+      description: Create a new secret
+      operationId: postSecrets
+      parameters:
+        - $ref: "#/parameters/secretRequired"
+      responses:
+        201:
+          description: Response contains object with key `secrets` and value of array of secret ids
+          schema:
+            type: object
+            properties:
+              secret:
+                $ref: "#/definitions/secretResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/errorResponse"
+
+  /secrets/{secretId}:
+    parameters:
+      - $ref: "#/parameters/secretId"
+
+    get:
+      security:
+        - Bearer: []
+      tags: ["Secret"]
+      description: Get secret
+      operationId: getSecretById
+      responses:
+        200:
+          description: Response contains object with key `secrets` and value of array of secret ids
+          schema:
+            type: object
+            properties:
+              secret:
+                $ref: "#/definitions/secretResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/errorResponse"
+    patch:
+      security:
+        - Bearer: []
+      tags: ["Secret"]
+      description: Update a secret
+      operationId: patchSecretById
+      parameters:
+        - $ref: "#/parameters/secretOptional"
+      responses:
+        200:
+          description: Response contains object with key `secrets` and value of array of secret ids
+          schema:
+            type: object
+            properties:
+              secret:
+                $ref: "#/definitions/secretResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/errorResponse"
+
+    delete:
+      security:
+        - Bearer: []
+      tags: ["Secret"]
+      description: Delete a secret
+      operationId: deleteSecretById
+      responses:
+        204:
+          description: On successful delation, returns empty body.
           schema:
             type: object
         default:

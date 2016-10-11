@@ -102,7 +102,7 @@ describe('GET /accounts/{accountId}', () => {
     it('after setting revocation date in the future, should still return account information', (cb) => {
         Jwts.findOneAndUpdate({
             _id: jwtId1
-        }, {rev_date: new Date().setTime(new Date().getTime() + 60*60*1000), rev_event: "TDD Future Revoke"}, (err) => {
+        }, {revDate: new Date().setTime(new Date().getTime() + 60*60*1000), revEvent: "TDD Future Revoke"}, (err) => {
             if (err) {
                 return cb(err);
             }
@@ -196,7 +196,7 @@ describe('GET /accounts/{accountId}', () => {
     it('after revoking the jwt, should return 401 error', (cb) => {
         Jwts.findOneAndUpdate({
             _id: jwtId1
-        }, {rev_date: new Date().setTime(new Date().getTime() - 60*60*1000), rev_event: "TDD Past Revoke"}, (err) => {
+        }, {revDate: new Date().setTime(new Date().getTime() - 60*60*1000), revEvent: "TDD Past Revoke"}, (err) => {
             if (err) {
                 return cb(err);
             }

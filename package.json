@@ -1,9 +1,11 @@
 {
-  "name": "Illumio-Secrets",
+  "name": "Secrets-API",
+  "description": "Secrets-API provides a REST backend to store secret information in an encrypted form.",
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test": "node ./bin/test"
   },
   "dependencies": {
     "async": "^2.0.1",

@@ -7,12 +7,14 @@ let recursive = require('recursive-readdir');
 
 describe('Testing All Endpoints', () => {
     it('Loaded All Tests', (cb) => {
-        recursive(path.join(__dirname, "..", "test"), [".js"], (err,files) => {
+        recursive(path.join(__dirname, "..", "test"), (err,files) => {
             if (err) {
                 return cb(err);
             }
             for (var filename of files) {
-                require(filename); //require each file in the test folder
+                if (filename.slice(-3) == ".js") {
+                    require(filename); //require each file in the test folder
+                }
             }
             cb();
         });

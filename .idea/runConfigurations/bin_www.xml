@@ -3,9 +3,7 @@
     <envs>
       <env name="DEBUG" value="Secrets-Backend:* swagger:middleware swagger:*" />
       <env name="SERVER_SECRET" value="cCpLeDJFRCZXbnE5NkRIUWokKjkK" />
-      <env name="MONGO_DB_URI" value="mongodb://admin:s1LX629&amp;7%pD@ds053156.mlab.com:53156/illumio-secrets-dev" />
-      <env name="HOST" value="localhost:3000" />
-      <env name="PROTOCOL" value="http://" />
+      <env name="MONGO_DB_URI" value="mongodb://admin:s1LX629&amp;7%pD@ds055626.mlab.com:55626/secrets-dev" />
     </envs>
     <browser url="http://localhost:3000/" />
     <profiling v8-profiler-path="" />
