@@ -16,7 +16,7 @@ _Note: After receiving a json web token (`jwt`) from login or signup, click the 
 - Primarily used Test Driven Development (TDD) to evaluate functionality
 - 45 Test cases are spread out across the [test](/test) directory to simulate the authentication flow and secret operations.
 - It includes tests for scenarios that should result in both successful and erroneous responses.
-- Alpha-tested with others, since test scripts don't cover all scenarios.
+- If given more time, would have Alpha-tested with others, since test scripts don't cover all scenarios.
 
 ## Getting Started
 ####Setup
@@ -58,7 +58,8 @@ _Note that testing will use the database specified above in `setup` and will run
 - Data validated by [swagger-express-middleware](https://www.npmjs.com/package/swagger-express-middleware) via the Swagger specification
 - Demo is powered by [swagger-ui](https://www.npmjs.com/package/swagger-ui) 
 - Test cases are executed by [mocha](https://www.npmjs.com/package/mocha) and [chai](https://www.npmjs.com/package/chai)
-A full list is available in [package.json](./package.json)
+
+A full list of dependencies is available in [package.json](./package.json)
 
 ## License
 MIT
