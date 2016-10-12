@@ -16,7 +16,7 @@ _Note: After receiving a json web token (`jwt`) from login or signup, click the 
 - Primarily used Test Driven Development (TDD) to evaluate functionality
 - 45 Test cases are spread out across the [test](/test) directory to simulate the authentication flow and secret operations.
 - It includes tests for scenarios that should result in both successful and erroneous responses.
-- If given more time, would have Alpha-tested with others, since test scripts don't cover all scenarios.
+- If given more time, would have Beta-tested with others, since test scripts don't cover all scenarios.
 
 ## Getting Started
 ####Setup
