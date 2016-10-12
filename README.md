@@ -13,9 +13,10 @@ _Note: After receiving a json web token (`jwt`) from login or signup, click the 
 - Upon logout, the random password is destroyed, so it is decrypt the encryption key and read user's data.
 
 ## Testing Considerations
-- Used Test Driven Development (TDD) to evaluate functionality
+- Primarily used Test Driven Development (TDD) to evaluate functionality
 - 45 Test cases are spread out across the [test](/test) directory to simulate the authentication flow and secret operations.
 - It includes tests for scenarios that should result in both successful and erroneous responses.
+- Alpha-tested with others, since test scripts don't cover all scenarios.
 
 ## Getting Started
 ####Setup

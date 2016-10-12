@@ -7,7 +7,7 @@ process.env.PORT = process.env.PORT || 3000;
 process.env.LIVE_PORT = process.env.LIVE_PORT || process.env.PORT;
 process.env.PROTOCOL = process.env.PROTOCOL || "http://";
 process.env.HOSTNAME = process.env.HOSTNAME || "localhost";
-process.env.HOST = process.env.HOST || process.env.HOSTNAME + process.env.LIVE_PORT;
+process.env.HOST = process.env.HOST || process.env.HOSTNAME + ":" + process.env.LIVE_PORT;
 
 let server = require('../index').server;
 
