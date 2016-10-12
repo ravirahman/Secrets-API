@@ -6,7 +6,7 @@ process.env.PROJECT_ROOT = path.dirname(__dirname);
 let recursive = require('recursive-readdir');
 
 describe('Testing All Endpoints', () => {
-    it('Loaded All Tests', (cb) => {
+    it('Loaded All Test Files', (cb) => {
         recursive(path.join(__dirname, "..", "test"), (err,files) => {
             if (err) {
                 return cb(err);

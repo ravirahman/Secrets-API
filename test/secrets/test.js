@@ -273,7 +273,7 @@ describe('/accounts/secrets', () => {
             });
     });
 
-    it("shouldn't delete alpha secret since it was already deleted and can't be found (throws 404)", (cb) => {
+    it("shouldn't delete alpha secret since it was already deleted and can't be found (should throw 404)", (cb) => {
         chai.request(app)
             .delete(`/secrets/${secretId1}`)
             .set('Authorization', `Bearer ${jwt1}`)
@@ -283,7 +283,7 @@ describe('/accounts/secrets', () => {
             });
     });
 
-    it("shouldn't delete alpha secret because it doesn't belong to account (throws 404)", (cb) => {
+    it("shouldn't delete alpha secret because it doesn't belong to account (should throw 404)", (cb) => {
         chai.request(app)
             .delete(`/secrets/${secretId2}`)
             .set('Authorization', `Bearer ${jwt2}`)

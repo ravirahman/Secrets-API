@@ -13,7 +13,7 @@ let server = require('../index').server;
 
 server.listen(process.env.PORT, null, null, (err) => {
     if (err) {
-        return console.error("error", err);
+        return console.error("Error with starting server", err);
     }
-    return console.log("server started");
+    return console.log("Server Started");
 });

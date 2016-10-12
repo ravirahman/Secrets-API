@@ -9,7 +9,7 @@ _Note: After receiving a json web token (`jwt`) from login or signup, click the 
 ### Brief Overview:
 - Upon account creation, the server generates a random encryption key and envelope-encrypts the key with the user's password.
 - Upon login, the server decrypts the envelope-encrypted encryption key with the user's password. It is then re-encrypted with a random password (stored in the database) and the server's secret. This server-decryptable form of the key is then  passed in the JSON Web Token so it can be used for subsequent operations during the same session.
-- Secrets can be created/updated/read/deleted using standard CURD operations
+- Secrets can be created/read/updated/deleted using standard CRUD operations
 - Upon logout, the random password is destroyed, so it is decrypt the encryption key and read user's data.
 
 ## Testing Considerations

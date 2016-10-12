@@ -277,7 +277,7 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/errorResponse"
-    #patch:
+    #patch: # Disabled because did not test
     #  security:
     #    - Bearer: []
     #  tags: ["Accounts"]

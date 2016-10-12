@@ -40,7 +40,7 @@ describe('GET /accounts/{accountId}', () => {
                 if (err) {
                     return cb(err);
                 }
-                jwt1 = res.body.jwt;
+                jwt1 = res.body.jwt; //save these values to use later in test
                 let payload = jwt.decode(jwt1);
                 accountId1 = payload.sub;
                 jwtId1 = payload.jti;
@@ -67,7 +67,7 @@ describe('GET /accounts/{accountId}', () => {
             if (err) {
                 return cb(err);
             }
-            jwt2 = res.body.jwt;
+            jwt2 = res.body.jwt; //save these values to use later in test
             let payload = jwt.decode(jwt2);
             accountId2 = payload.sub;
             jwtId2 = payload.jti;
