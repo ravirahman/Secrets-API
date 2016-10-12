@@ -38,7 +38,7 @@ _Note that Secrets-API listens on the specified `PORT` below (using `http.create
 - Visit [http://localhost:3000](http://localhost:3000) for the Swagger-UI (or the protocol/hostname/port combination specified via environmental variables)
 
 ####Test
-_Note that testing will use the database specified above in `setup` and will run all the test cases in the [test](/test) directory
+_Note that testing will use the database specified above in `setup` and will run all the test cases in the [test](/test) directory_
 - `npm test`
 
 ## Design Considerations
