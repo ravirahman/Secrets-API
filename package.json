@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "./node_modules/.bin/forever start ./bin/www",
+    "start": "node ./bin/www",
     "test": "node ./node_modules/mocha/bin/_mocha --ui tdd ./bin/test"
   },
   "dependencies": {
@@ -16,7 +16,6 @@
     "express-error-handler": "^1.1.0",
     "express-jwt": "^5.1.0",
     "express-unless": "^0.3.0",
-    "forever": "^0.15.2",
     "jsonwebtoken": "^7.1.9",
     "mongoose": "^4.6.3",
     "morgan": "~1.7.0",
