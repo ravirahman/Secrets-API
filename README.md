@@ -45,7 +45,7 @@ _Note that testing will use the database specified above in `setup` and will run
 - Used envelope encryption to allow for password changes without having re-encrypting all secrets
 - Decided against client-side encryption (and SRP authentication) to allow for client-agnostic use via REST
 - Only encrypts content of secret so the title is searchable
-- 
+
 ## Future Improvements
 - Implement secret-specific encryption key and permission structure to allow for sharing of secrets between accounts
 - Search in encrypted fields (so both title and content can be encrypted)
