@@ -306,7 +306,7 @@ paths:
         - $ref: "#/parameters/accountId"
         - $ref: "#/parameters/jwtIds"
       responses:
-        204:
+        200:
           description: Response is empty
           schema:
             type: object
@@ -414,7 +414,7 @@ paths:
       description: Delete a secret
       operationId: deleteSecretById
       responses:
-        204:
+        200:
           description: On successful delation, returns empty body.
           schema:
             type: object
