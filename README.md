@@ -10,13 +10,13 @@ _Note: After receiving a json web token (`jwt`) from login or signup, click the 
 - Upon account creation, the server generates a random encryption key and envelope-encrypts the key with the user's password.
 - Upon login, the server decrypts the envelope-encrypted encryption key with the user's password. It is then re-encrypted with a random password (stored in the database) and the server's secret. This server-decryptable form of the key is then  passed in the JSON Web Token so it can be used for subsequent operations during the same session.
 - Secrets can be created/read/updated/deleted using standard CRUD operations
-- Upon logout, the random password is destroyed, so it is decrypt the encryption key and read user's data.
+- Upon logout, the random password is destroyed, so the server can no longer decrypt the user's encryption key (and thus user data is protected at rest).
 
 ## Testing Considerations
 - Primarily used Test Driven Development (TDD) to evaluate functionality
 - 45 Test cases are spread out across the [test](/test) directory to simulate the authentication flow and secret operations.
 - It includes tests for scenarios that should result in both successful and erroneous responses.
-- If given more time, would have Beta-tested with others, since test scripts don't cover all scenarios.
+- Would Beta-test with others, since test scripts don't cover all scenarios.
 
 ## Getting Started
 ####Setup
